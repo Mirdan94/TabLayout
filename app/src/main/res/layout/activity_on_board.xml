@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".onboard.OnBoardActivity">
 
     <androidx.viewpager.widget.ViewPager
@@ -16,22 +17,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Skip"
-        android:layout_alignLeft="@+id/view_pager"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"/>
+       />
+
+    <!--библиотека-->
+<!--    <com.rd.PageIndicatorView-->
+<!--        android:id="@+id/pageIndicatorView"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        android:layout_marginTop="50dp"-->
+<!--        android:paddingTop="12dp"-->
+<!--        app:piv_animationType="scale"-->
+<!--        app:piv_dynamicCount="true"-->
+<!--        app:piv_interactiveAnimation="true"-->
+<!--        app:piv_padding="12dp"-->
+<!--        app:piv_radius="6dp"-->
+<!--        app:piv_count="3"-->
+<!--        app:piv_selectedColor="@color/colorPrimary"-->
+<!--        app:piv_unselectedColor="@color/colorAccent"-->
+<!--        app:piv_viewPager="@id/view_pager"-->
+<!--        android:layout_gravity="center"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:layout_margin="20dp" />-->
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_dots"
-        android:layout_marginBottom="50dp"
-        android:layout_centerInParent="true"
-        android:layout_alignBottom="@+id/view_pager"
+        android:id="@+id/tab_layout"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        app:tabIndicatorHeight="2dp"
-        app:tabMode="fixed"
-        app:tabTextColor="@color/tabtextcolor"
-        app:tabIndicatorColor="@color/tabindicatorcolor"
-        app:tabBackground="@drawable/ic_dots"/>
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"/>
 
 
 </RelativeLayout>

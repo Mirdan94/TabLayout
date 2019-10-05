@@ -17,7 +17,7 @@ public class OnBoardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_board);
-        tabLayout = findViewById(R.id.tab_dots);
+        tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         ViewPagerAdapter2 adapter = new ViewPagerAdapter2(getSupportFragmentManager(), 0);
         adapter.AddFragment(new FragmentPage1(), "1");
@@ -25,7 +25,7 @@ public class OnBoardActivity extends AppCompatActivity {
         adapter.AddFragment(new FragmentPage3(), "3");
         //adapter set up
         viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager, true);
         initViewPAger();
     }
 
