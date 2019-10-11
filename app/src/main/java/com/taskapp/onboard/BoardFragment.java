@@ -1,6 +1,8 @@
 package com.taskapp.onboard;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -19,7 +21,10 @@ import android.widget.Toast;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
+import com.taskapp.MainActivity;
 import com.taskapp.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,6 +79,10 @@ public class BoardFragment extends Fragment {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences preferences = getActivity().getSharedPreferences("settings", MODE_PRIVATE);
+                preferences.edit().putBoolean("isShown", true).apply();
+                startActivity(new Intent(getContext(), MainActivity.class));
+                getActivity().finish();
                 Toast.makeText(getContext(), "Ты кликнул на меня", Toast.LENGTH_SHORT).show();
             }
         });

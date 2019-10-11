@@ -1,14 +1,22 @@
 package com.taskapp;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -17,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 import com.taskapp.onboard.OnBoardActivity;
+import com.taskapp.ui.home.HomeFragment;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -24,15 +33,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.AdapterView;
+import android.widget.Button;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(true){
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+        boolean isShown = preferences.getBoolean("isShown", false);
+        if(!isShown){
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;
@@ -59,13 +76,41 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        //initFile();
+
+
     }
+
+
+    private void initFile () {
+        File folder = new File(Environment.getExternalStorageDirectory(), "TaskApp"); //как можно заменить??
+        folder.mkdir();
+        File file = new File(folder, "note.txt");
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.action_clear){
+            SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+            preferences.edit().clear().apply();
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
