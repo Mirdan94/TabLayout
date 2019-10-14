@@ -14,7 +14,7 @@ public class FormActivity extends AppCompatActivity {
 
     private EditText editTitle;
     private EditText editDesc;
-    final String position= getIntent().getExtras().getString("position");
+    private Task task;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,11 @@ public class FormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form);
         editTitle = findViewById(R.id.editTitle);
         editDesc = findViewById(R.id.editDesc);
+        task = (Task) getIntent().getSerializableExtra("task");
+        if(task != null) {
+            editTitle.setText(task.getTitle());
+            editDesc.setText(task.getDesc());
+        }
     }
 
     public void onClick(View view) {
@@ -32,16 +37,23 @@ public class FormActivity extends AppCompatActivity {
             editTitle.setError("Заполните это поле");
             return;
         }
+
         if (TextUtils.isEmpty(desc)) {
             editDesc.setError("Заполните это поле");
             return;
         }
+
+        if(task != null) {
+            task.setTitle(title);
+            task.setDesc(desc);
+            App.getInstance().getDatabase().taskDao().update(task);
+        } else {
+            task = new Task (title, desc);
+            App.getInstance().getDatabase().taskDao().insert(task);
+        }
         Task task = new Task(title, desc);
         App.getInstance().getDatabase().taskDao().insert(task);
 
-        Intent intent2 = new Intent(this, HomeFragment.class);
-        intent2.putExtra("position", position);
-        startActivity(intent2);
 
         Intent intent = new Intent();
         intent.putExtra("task", task);

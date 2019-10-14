@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.os.Environment;
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
         boolean isShown = preferences.getBoolean("isShown", false);
-        if(!isShown){
+        if (!isShown) {
             startActivity(new Intent(this, OnBoardActivity.class));
             finish();
             return;
@@ -80,20 +81,20 @@ public class MainActivity extends AppCompatActivity {
         //initFile();
 
 
+
     }
 
-
-    private void initFile () {
+    private void initFile() {
         File folder = new File(Environment.getExternalStorageDirectory(), "TaskApp"); //как можно заменить??
         folder.mkdir();
         File file = new File(folder, "note.txt");
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+    }
 
 
     @Override
@@ -105,10 +106,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.action_clear){
-            SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-            preferences.edit().clear().apply();
-            finish();
+        switch (item.getItemId()) {
+            case R.id.action_clear:
+                SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+                preferences.edit().clear().apply();
+                finish();
+                break;
+            case R.id.action_sort:
+                Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+                ((HomeFragment) navHostFragment.getChildFragmentManager().getFragments().get(0)).sortList();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

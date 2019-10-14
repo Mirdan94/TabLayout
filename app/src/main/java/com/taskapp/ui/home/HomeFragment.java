@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private List<Task> list;
-    HashMap<Integer, String> hashMap = new HashMap<>();
+    private int pos;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -53,12 +53,13 @@ public class HomeFragment extends Fragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                pos = position;
                 Task task = list.get(position);
                 Intent intent = new Intent(getContext(), FormActivity.class);
-                intent.putExtra("position", task);
-                startActivity(intent);
-//                Toast.makeText(getContext(), task.getTitle(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("task", task);
+                startActivityForResult(intent, 101);
             }
+
 
             @Override
             public void onItemLongClick(int position) {
@@ -82,6 +83,12 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
+
+    public void sortList() {
+        list.clear();
+        list.addAll(App.getInstance().getDatabase().taskDao().getAllsorted());
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -89,9 +96,13 @@ public class HomeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("TAG", "onActivityResult fragment");
-        if (resultCode == Activity.RESULT_OK && requestCode == 100) {
+        if (resultCode == Activity.RESULT_OK) {
             Task task = (Task) data.getSerializableExtra("task");
-            list.add(task);
+            if (requestCode == 100) {
+                list.add(task);
+            } else if (requestCode == 101) {
+                list.set(pos, task);
+            }
             adapter.notifyDataSetChanged();
         }
     }

@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:padding="16dp"
     android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:textStyle="bold"
+        android:hint="Введите текст"
         android:layout_height="wrap_content"/>
 
     <TextView
         android:id="@+id/textDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:hint="Введите текст"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"/>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"
+        app:lottie_fileName="checked.json"
+        app:lottie_autoPlay="false"
+        app:lottie_loop="true"
+        android:layout_marginLeft="280dp"
 
-</LinearLayout>
+        />
+
+</FrameLayout>
