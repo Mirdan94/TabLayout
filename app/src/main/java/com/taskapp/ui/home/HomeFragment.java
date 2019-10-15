@@ -60,7 +60,6 @@ public class HomeFragment extends Fragment {
                 startActivityForResult(intent, 101);
             }
 
-
             @Override
             public void onItemLongClick(int position) {
                 final Task task = list.get(position);
@@ -82,7 +81,6 @@ public class HomeFragment extends Fragment {
                 dialog.show();
             }
         });
-
     }
 
     public void sortList() {

@@ -21,6 +21,10 @@ public class Task implements Serializable {
         this.desc = desc;
     }
 
+    public Task(float progress) {
+
+    }
+
     public long getId() {
         return id;
     }
